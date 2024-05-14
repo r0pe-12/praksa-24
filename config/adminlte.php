@@ -310,6 +310,23 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+
+        'MAIN NAVIGATION',
+        [
+            'text' => 'Users',
+            'url' => '/users',
+            'icon' => 'fas fa-users',
+        ],
+        [
+            'text' => 'Posts',
+            'url' => '/posts',
+            'icon' => 'fas fa-copy',
+        ],
+        [
+            'text' => 'Categories',
+            'url' => '/categories',
+            'icon' => 'fas fa-stream',
+        ],
     ],
 
     /*

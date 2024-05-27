@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
@@ -26,14 +30,27 @@ class UserController extends Controller
     public function create()
     {
         //
+        $roles = Role::all();
+
+        return view('users.create', [
+            'roles' => $roles
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
         //
+        $input = $request->validated();
+
+        $user = new User(Arr::only($input, ['fname', 'lname', 'email', 'password']));
+        $role = Role::findOrFail($input['role_id']);
+
+        $role->users()->save($user);
+
+        return redirect()->route('users.index')->with('success', 'User successfully created');
     }
 
     /**
@@ -42,6 +59,10 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
+        return view('users.show', [
+            'user' => $user,
+            'roles' => Role::all()
+        ]);
     }
 
     /**
@@ -55,9 +76,14 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         //
+        $input = $request->validated();
+
+        $user->update(Arr::only($input, ['fname', 'lname', 'email', 'password', 'role_id']));
+
+        return redirect()->route('users.index')->with('success', 'User successfully updated');
     }
 
     /**

@@ -2,7 +2,8 @@
 
 return [
 
-    'full_name' => 'Ime i prezime',
+    'first_name' => 'Ime',
+    'last_name' => 'Prezime',
     'email' => 'Email',
     'password' => 'Lozinka',
     'retype_password' => 'Ponovo unesite lozinku',
